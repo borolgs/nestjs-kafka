@@ -28,3 +28,6 @@ GET http://localhost:3000/send/hello
 
 Consumer  
 `message { msg: 'hello' }`
+
+Kafka UI
+http://localhost:8080

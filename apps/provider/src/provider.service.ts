@@ -1,28 +1,19 @@
-import { Injectable } from '@nestjs/common';
-import { Client, ClientKafka, Transport } from '@nestjs/microservices';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientKafka, ClientProxyFactory } from '@nestjs/microservices';
+import { providerConfig, ProviderConfig } from './config';
 
 @Injectable()
 export class ProviderService {
-  @Client({
-    transport: Transport.KAFKA,
-    options: {
-      client: {
-        clientId: 'user',
-        brokers: ['localhost:29092'],
-      },
-      consumer: {
-        groupId: 'user-consumer',
-      },
-    },
-  })
   client: ClientKafka;
+  constructor(@Inject(providerConfig.KEY) private config: ProviderConfig) {}
 
   async onModuleInit() {
-    this.client.subscribeToResponseOf('user-topic');
+    this.client = ClientProxyFactory.create(this.config as any) as any;
+    this.client.subscribeToResponseOf('test-topic');
     await this.client.connect();
   }
 
-  sendMessage(msg: any) {
-    return this.client.send('user-topic', { msg });
+  async sendMessage(msg: any) {
+    return this.client.send('test-topic', { msg });
   }
 }
