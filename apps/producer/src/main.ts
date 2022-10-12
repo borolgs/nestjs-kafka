@@ -3,11 +3,11 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { ProviderModule } from './provider.module';
+import { ProducerModule } from './producer.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
-    ProviderModule,
+    ProducerModule,
     new FastifyAdapter(),
   );
   await app.listen(3000);
