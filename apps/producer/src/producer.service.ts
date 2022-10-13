@@ -1,18 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ClientKafka, ClientProxyFactory } from '@nestjs/microservices';
-import { producerConfig, ProducerConfig } from './config';
+import { Injectable } from '@nestjs/common';
+import { ClientKafkaService } from '@shared/client-kafka';
+
 @Injectable()
 export class ProducerService {
-  client: ClientKafka;
-  constructor(@Inject(producerConfig.KEY) private config: ProducerConfig) {}
+  constructor(private producer: ClientKafkaService) {}
 
   async onModuleInit() {
-    this.client = ClientProxyFactory.create(this.config as any) as any;
-    this.client.subscribeToResponseOf('test-topic');
-    await this.client.connect();
+    await this.producer.subscribeAndConnect(['test-topic', 'test-topic-2']);
   }
 
   async sendMessage(msg: any) {
-    return this.client.send('test-topic', { msg });
+    return this.producer.send('test-topic-2', { msg });
   }
 }

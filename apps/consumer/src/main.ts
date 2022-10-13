@@ -5,7 +5,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { ConsumerConfig, consumerConfig } from './config';
 import { ConsumerModule } from './consumer.module';
-import { KafkaCustomTransport } from './server-kafka';
+import { KafkaCustomTransport } from '@shared/server-kafka';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(

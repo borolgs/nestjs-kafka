@@ -8,4 +8,10 @@ export class ConsumerController {
     console.log('message', message);
     return {};
   }
+
+  @MessagePattern('test-topic-2')
+  getMessage2(@Payload() message: any) {
+    console.log('message from topic 2', message);
+    return {};
+  }
 }
