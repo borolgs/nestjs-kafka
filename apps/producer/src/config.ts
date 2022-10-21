@@ -1,11 +1,11 @@
 import { ConfigType, registerAs } from '@nestjs/config';
 import { Transport } from '@nestjs/microservices';
 
-export const providerConfig = registerAs('consumer', () => ({
+export const producerConfig = registerAs('producer', () => ({
   transport: Transport.KAFKA,
   options: {
     client: {
-      clientId: process.env.KAFKA_CLIENT_ID ?? 'provider',
+      clientId: process.env.KAFKA_CLIENT_ID ?? 'producer',
       brokers: [process.env.KAFKA_BROKER ?? 'localhost:29092'],
     },
     consumer: {
@@ -14,4 +14,4 @@ export const providerConfig = registerAs('consumer', () => ({
   },
 }));
 
-export type ProviderConfig = ConfigType<typeof providerConfig>;
+export type ProducerConfig = ConfigType<typeof producerConfig>;

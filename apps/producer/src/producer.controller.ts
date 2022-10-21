@@ -1,9 +1,9 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { ProviderService } from './provider.service';
+import { ProducerService } from './producer.service';
 
 @Controller()
-export class ProviderController {
-  constructor(private readonly service: ProviderService) {}
+export class ProducerController {
+  constructor(private readonly service: ProducerService) {}
 
   @Get('send/:msg')
   sendMessage(@Param('msg') msg: any) {
